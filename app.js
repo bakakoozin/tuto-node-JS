@@ -1,24 +1,20 @@
+require('dotenv').config()
 const express = require('express')
-const { success } = require('./helper.js')
-let pokemons = require('./mock-pokemon');
+const { PORT } = require('./src/utils/constants')
+const { getPokemon, getPokemons } = require('./src/services/pokemon')
 
 const app = express()
-const port = 3000
 
-app.get('/', (req,res) => res.send('Hello again, Express !'))
+// HOME ---------------------------------------------------
+app.get('/', (_req, res) => res.send('Hello again, Express !'))
 
-app.get('/api/pokemons/:id', (req,res) => {
-    const id = parseInt(req.params.id)
-    const pokemon = pokemons.find(pokemon => pokemon.id === id)
-    const message = 'Un pokémon a bien été trouvé'
-    res.json(success(message, pokemon))
-})
+// POKEMON ---------------------------------------------------
+app.get('/api/pokemons', getPokemons)
+app.get('/api/pokemon/:id', getPokemon)
 
-app.get('/api/pokemons', (req,res) => {
-    res.send(`Il y a ${pokemons.length} pokémons dans le pokédex, pour le moment.`)
-})
-
-
-
-
-app.listen(port, () => console.log(`Notre application Node est démarrée sur: http://localhost:${port}`))
+// START ---------------------------------------------------
+app.listen(PORT, () =>
+  console.log(
+    `Notre application Node est démarrée sur: http://localhost:${PORT}`
+  )
+)
