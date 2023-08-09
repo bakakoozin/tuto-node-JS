@@ -1,11 +1,11 @@
 const express = require('express')
+const { PORT } = require('./src/constants')
 const morgan = require('morgan')
 const favicon = require('serve-favicon')
 const { success, getUniqueId } = require('./helper.js')
 let pokemons = require('./mock-pokemon');
 
 const app = express()
-const port = 3000
 
 app
     .use(favicon(__dirname + '/favicon.ico'))
@@ -34,4 +34,4 @@ app.post('/api/pokemons', (req, res) => {
 })
 
 
-app.listen(port, () => console.log(`Notre application Node est démarrée sur: http://localhost:${port}`))
+app.listen(PORT, () => console.log(`Notre application Node est démarrée sur: http://localhost:${PORT}`))
